@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>checkbox</title>
+
+    <style>
+        .styled-checkbox {
+            position: relative;
+            box-sizing: border-box;
+            display: block;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #000;
+            border-radius: 4px;
+            margin-top: 8px;
+            cursor: pointer;
+
+            /* focus ring */
+            outline-width: 1px;
+            outline-offset: 4px;
+            outline-style: none;
+            outline-color: -webkit-focus-ring-color;
+        }
+
+        .styled-checkbox input {
+            opacity: 0;
+            position: absolute;
+        }
+
+        .styled-checkbox svg {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #fff;
+            background-color: #000;
+        }
+
+        .styled-checkbox:has(input:checked) svg {
+            opacity: 1;
+        }
+
+        /* show focus ring on styled checkbox when native checkbox is focused */
+        .form:has(#native:focus-visible) .styled-checkbox,
+        /* show focus ring */
+        .styled-checkbox:has(input:focus-visible) {
+            outline-style: auto;
+        }
+
+        /* show focus ring on native checkbox when styled checkbox is focused */
+        .form:has(#styled:focus-visible) #native {
+            outline: -webkit-focus-ring-color auto 1px;
+            outline-offset: 2px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <form class="form">
+        <input type="checkbox" id="native" tabindex="1">
+        <label class="styled-checkbox">
+            <input type="checkbox" name="checkbox" id="styled" tabindex="2">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+                <rect width="256" height="256" fill="none"></rect>
+                <polyline points="216 72.005 104 184 48 128.005" fill="none" stroke="currentColor"
+                    stroke-linecap="round" stroke-linejoin="round" stroke-width="16">
+                </polyline>
+            </svg>
+        </label>
+    </form>
+
+    <script>
+        native.addEventListener('change', () => {
+            styled.checked = native.checked;
+        });
+        styled.addEventListener('change', () => {
+            native.checked = styled.checked;
+        });
+    </script>
+</body>
+
+</html>
